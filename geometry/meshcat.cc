@@ -449,19 +449,19 @@ class MeshcatShapeReifier : public ShapeReifier {
 
       // TODO(SeanCurtis-TRI): Provide test showing that .dae works.
 
-      if (format != "obj" && format != "dae") {
+      if (format != "obj" && format != "dae" && format != "stl") {
         // Note: We send the data along to meshcat regardless relying on meshcat
         // to ignore the mesh and move on. The *path* will still exist.
         static const logging::Warn one_time(
             "Drake's Meshcat only supports Mesh/Convex specifications which "
-            "use .obj, .gltf, or .dae files. Mesh specifications using other "
-            "mesh types (e.g., .stl, etc.) will not be visualized.");
+            "use .obj, .gltf, .dae, or .stl files. Mesh specifications using other "
+            "mesh types (e.g., .???, etc.) will not be visualized.");
       }
       auto geometry = std::make_unique<internal::MeshFileGeometryData>();
       geometry->uuid = uuid_generator_.GenerateRandom();
       geometry->format = std::move(format);
-      geometry->data = std::move(mesh_data);
-      lumped.geometry = std::move(geometry);
+        geometry->data = std::move(mesh_data);
+            lumped.geometry = std::move(geometry);
 
       lumped.object.emplace<internal::MeshData>();
     }
